@@ -1,4 +1,5 @@
 import os
+import sys
 
 library = os.environ.get('LIBRARY_NAME', 'Meridian Library District')
 library_card_number = os.environ.get('LIBRARY_CARD_NUMBER', '').strip()
@@ -7,7 +8,15 @@ if len(library_card_number) < 14:
 nyt_username = os.environ.get('NYT_USERNAME', '').strip()
 nyt_password = os.environ.get('NYT_PASSWORD', '').strip()
 
-form_url = "https://form.jotform.com/220755446894164"
+base_form_url = "https://form.jotform.com/220755446894164"
+games_form_url = "https://form.jotform.com/220765599098170"
+cooking_forms_url = "https://form.jotform.com/220765488716164"
+
+form_url = base_form_url
+if sys.argv[-1] == 'cooking':
+    form_url = cooking_forms_url
+if sys.argv[-1] == 'games':
+    form_url = games_form_url
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
