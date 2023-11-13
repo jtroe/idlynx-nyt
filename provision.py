@@ -9,7 +9,6 @@ nyt_password = os.environ.get('NYT_PASSWORD', '').strip()
 
 form_url = "https://form.jotform.com/220755446894164"
 
-# https://www.nytimes.com/subscription/redeem?campaignId=8QKRH&gift_code=290ba2c7762dcea5
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
