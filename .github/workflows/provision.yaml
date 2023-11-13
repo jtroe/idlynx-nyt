@@ -6,8 +6,14 @@ on:
     - cron: '0 6 * * *' # runs every day at midnight Mountain Daylight Time (UTC-6)
 
 jobs:
-  build:
+  provision:
     runs-on: macos-latest
+    
+    env:
+      LIBRARY_CARD_NUMBER: ${{ secrets.LIBRARY_CARD_NUMBER }}
+      LIBRARY_NAME: ${{ vars.LIBRARY_NAME }}
+      NYT_USERNAME: ${{ secrets.NYT_USERNAME }}
+      NYT_PASSWORD: ${{ secrets.NYT_PASSWORD }}
 
     steps:
     - uses: actions/checkout@v2
@@ -22,10 +28,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Provision
-      run: python provision.py
-      env:
-        LIBRARY_CARD_NUMBER: ${{ secrets.LIBRARY_CARD_NUMBER }}
-        LIBRARY_NAME: ${{ vars.LIBRARY_NAME }}
-        NYT_USERNAME: ${{ secrets.NYT_USERNAME }}
-        NYT_PASSWORD: ${{ secrets.NYT_PASSWORD }}
+    - name: Provision Base Subscription
+      run: python provision_nyt.py
+
+    - name: Provision Games Subscription
+      run: python provision_nyt.py games
+    
+    - name: Provision Cooking Subscription
+      run: python provision_nyt.py cooking
